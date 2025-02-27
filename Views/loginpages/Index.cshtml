@@ -1,0 +1,133 @@
+﻿@model IEnumerable<LoginPagePeoject.loginpage>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #7ec8ed;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #0d0c0c;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .container.body-content {
+            background-color: transparent !important;
+        }
+
+    h2 {
+        color: #333;
+        padding: 10px;
+    }
+
+    p {
+        padding: 10px;
+    }
+
+        p a {
+            text-decoration: none;
+        }
+
+            p a:hover {
+                text-decoration: underline;
+            }
+
+    #links a {
+        text-decoration: none;
+    }
+
+        #links a:hover {
+            text-decoration: underline;
+        }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #7fe39d;
+        }
+
+        .table tr/*:nth-child(even)*/ {
+            background-color: #f9f9f9;
+        }
+
+        .table tr:hover {
+            background-color: #bf96e0;
+        }
+
+    .action-links a {
+        margin: 0 5px;
+        text-decoration: none;
+        color: #007BFF;
+    }
+
+        .action-links a:hover {
+            text-decoration: underline;
+        }
+
+    .create-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        text-decoration: none;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: #fff;
+        border-radius: 5px;
+    }
+
+        .create-link:hover {
+            background-color: #218838;
+        }
+</style>
+
+<h2>Login Details</h2>
+
+<p>
+    @Html.ActionLink("Login", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

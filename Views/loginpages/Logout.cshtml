@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Logout";
+}
+
+
+<style>
+    .custom-btn {
+        display: inline-block;
+        background-color: #007bff; /* Bootstrap primary color */
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: 0.3s;
+    }
+
+        .custom-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+</style>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="alert alert-success text-center p-4 shadow rounded">
+                <h2 class="mb-3">You have logged out successfully!</h2>
+                <p>Thank you for visiting. Click below to login again.</p>
+                <a href="@Url.Action("Create", "loginpages")" class="btn btn-primary">Login Again</a>
+            </div>
+        </div>
+    </div>
+</div>
+
