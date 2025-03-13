@@ -11,9 +11,10 @@ using LoginPagePeoject;
 
 namespace LoginPagePeoject.Controllers
 {
+    
     public class loginpagesController : Controller
     {
-        private proteckhydbEntities db = new proteckhydbEntities();
+        private proteckhydbEntities1 db = new proteckhydbEntities1();
 
         // GET: loginpages
         public ActionResult Index()
@@ -45,28 +46,52 @@ namespace LoginPagePeoject.Controllers
         // POST: loginpages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       // [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Username,Password")] loginpage loginpage)
+        public ActionResult Create(loginpage loginpage)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    db.loginpages.Add(loginpage);
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
+            proteckhydbEntities1 db = new proteckhydbEntities1();
 
-            var user=db.loginpages.FirstOrDefault(x=>x.Username==loginpage.Username&& x.Password==loginpage.Password);
+            var emplist = db.EmployeeDetails.ToList();
+
+
+            var user = db.loginpages.FirstOrDefault(x => x.Username == loginpage.Username && x.Password == loginpage.Password && x.ActiveStatus ==true);
+
             if (user != null)
             {
-                return RedirectToAction("Index");
+                if (user.ActiveStatus == true)
+                {
+                    if (user.Designation == "1004")
+                    {
+                        return RedirectToAction("Index", "Lead");
+                    }
+                    else if (user.Designation == "1008")
+                    {
+                        return RedirectToAction("Index", "HR");
+                    }
+                    else if (user.Designation == "1005")
+                    {
+                        return RedirectToAction("Index", "Manager");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    // Handle inactive user
+                    ViewBag.validation = "The User Credentials are in Inactive Status. Please contact Admin.";
+                    return View(loginpage);
+                }
             }
             else
             {
-                //ModelState.AddModelError("", "Invalid Credentials");
+                // Handle invalid credentials
                 ViewBag.validation = "Invalid Credentials";
+                return View(loginpage);
             }
-            return View(loginpage);
         }
 
         // GET: loginpages/Edit/5
@@ -89,7 +114,7 @@ namespace LoginPagePeoject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Username,Password")] loginpage loginpage)
+        public ActionResult Edit([Bind(Include = "Id,Username,Password,Designation")] loginpage loginpage)
         {
             if (ModelState.IsValid)
             {
@@ -138,7 +163,7 @@ namespace LoginPagePeoject.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return View();
+            return RedirectToAction("Logout");
         }
     }
 }

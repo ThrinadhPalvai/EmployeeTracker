@@ -17,13 +17,22 @@ namespace LoginPagePeoject
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DesignTb()
         {
+            this.EmployeeDetails = new HashSet<EmployeeDetail>();
             this.registrations = new HashSet<registration>();
+            this.PromoteEmployees = new HashSet<PromoteEmployee>();
+            this.PromoteEmployees1 = new HashSet<PromoteEmployee>();
         }
     
         public int Id { get; set; }
         public string Designation { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeDetail> EmployeeDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<registration> registrations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromoteEmployee> PromoteEmployees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromoteEmployee> PromoteEmployees1 { get; set; }
     }
 }

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LoginPagePeoject.PromoteEmployee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Salary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DesignTb.Designation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeDetail.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DesignTb1.Designation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeDetail1.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeDetail11.Firstname)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Salary)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DesignTb.Designation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeDetail.Firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DesignTb1.Designation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeDetail1.Firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeDetail11.Firstname)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

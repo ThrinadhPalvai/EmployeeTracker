@@ -12,19 +12,20 @@ namespace LoginPagePeoject
     using System;
     using System.Collections.Generic;
     
-    public partial class registration
+    public partial class PromoteEmployee
     {
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public Nullable<System.DateTime> DateofBirth { get; set; }
-        public string Email { get; set; }
-        public Nullable<long> PhoneNumber { get; set; }
-        public string Address { get; set; }
+        public int ID { get; set; }
         public Nullable<int> Designation { get; set; }
+        public Nullable<int> SelectEmployee { get; set; }
+        public Nullable<decimal> Salary { get; set; }
+        public Nullable<int> AssignTo { get; set; }
+        public Nullable<int> NewDesignation { get; set; }
+        public Nullable<int> NewSupervisor { get; set; }
     
         public virtual DesignTb DesignTb { get; set; }
+        public virtual EmployeeDetail EmployeeDetail { get; set; }
+        public virtual DesignTb DesignTb1 { get; set; }
+        public virtual EmployeeDetail EmployeeDetail1 { get; set; }
+        public virtual EmployeeDetail EmployeeDetail11 { get; set; }
     }
 }

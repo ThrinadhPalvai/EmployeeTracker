@@ -4,8 +4,110 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<style>
 
+    /* General styles */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header styles */
+    h2, h4 {
+        color: #333;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Form container */
+    .form-horizontal {
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+    }
+
+        /* Form header */
+        .form-horizontal h4 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+    /* Form group */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Label */
+    .control-label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Form control */
+    .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Validation message */
+    .text-danger {
+        color: #d9534f;
+        font-size: 12px;
+    }
+
+    /* Submit button */
+    .btn-default {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+        .btn-default:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    /* Horizontal rule styles */
+    hr {
+        border: 0;
+        height: 1px;
+        background: #333;
+        background-image: linear-gradient(to right, #ccc, #333, #ccc);
+        margin: 20px 0;
+    }
+
+    /* Link styles */
+    a {
+        color: #007bff;
+        text-decoration: none;
+        margin: 0 5px;
+    }
+
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+
+</style>
+
+<h2>Edit</h2>
 
 @using (Html.BeginForm())
 {
@@ -34,6 +136,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Designation, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
@@ -44,7 +154,3 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

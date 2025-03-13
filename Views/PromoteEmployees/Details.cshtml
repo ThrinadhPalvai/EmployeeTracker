@@ -1,0 +1,66 @@
+﻿@model LoginPagePeoject.PromoteEmployee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PromoteEmployee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Salary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Salary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DesignTb.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DesignTb.Designation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeDetail.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeDetail.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DesignTb1.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DesignTb1.Designation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeDetail1.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeDetail1.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeDetail11.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeDetail11.Firstname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -129,10 +129,26 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Department1Controller.cs" />
+    <Compile Include="Controllers\EmployeeDetailsController.cs" />
+    <Compile Include="Controllers\EmployeeTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HRController.cs" />
+    <Compile Include="Controllers\LeadController.cs" />
     <Compile Include="Controllers\loginpagesController.cs" />
+    <Compile Include="Controllers\ManagerController.cs" />
+    <Compile Include="Controllers\PromoteEmployeesController.cs" />
     <Compile Include="Controllers\registrationsController.cs" />
+    <Compile Include="Department1.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="DesignTb.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmployeeType.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -155,6 +171,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="PromoteEmployee.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="registration.cs">
@@ -188,8 +207,8 @@
     <Content Include="Images\5.jpg" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
       <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -240,11 +259,34 @@
     <Content Include="Views\loginpages\Edit.cshtml" />
     <Content Include="Views\loginpages\Index.cshtml" />
     <Content Include="Views\loginpages\Logout.cshtml" />
-    <Content Include="Views\registrations\RegCreate.cshtml" />
+    <Content Include="Views\HR\Index.cshtml" />
+    <Content Include="Views\Manager\Index.cshtml" />
+    <Content Include="Views\Lead\Index.cshtml" />
+    <Content Include="Views\EmployeeDetails\Delete.cshtml" />
+    <Content Include="Views\EmployeeDetails\Details.cshtml" />
+    <Content Include="Views\EmployeeDetails\Edit.cshtml" />
+    <Content Include="Views\EmployeeDetails\Index.cshtml" />
+    <Content Include="Views\EmployeeDetails\Create.cshtml" />
+    <Content Include="Views\registrations\Create.cshtml" />
     <Content Include="Views\registrations\Delete.cshtml" />
     <Content Include="Views\registrations\Details.cshtml" />
     <Content Include="Views\registrations\Edit.cshtml" />
     <Content Include="Views\registrations\Index.cshtml" />
+    <Content Include="Views\Department1\Create.cshtml" />
+    <Content Include="Views\Department1\Delete.cshtml" />
+    <Content Include="Views\Department1\Details.cshtml" />
+    <Content Include="Views\Department1\Edit.cshtml" />
+    <Content Include="Views\Department1\Index.cshtml" />
+    <Content Include="Views\EmployeeTypes\Create.cshtml" />
+    <Content Include="Views\EmployeeTypes\Delete.cshtml" />
+    <Content Include="Views\EmployeeTypes\Details.cshtml" />
+    <Content Include="Views\EmployeeTypes\Edit.cshtml" />
+    <Content Include="Views\EmployeeTypes\Index.cshtml" />
+    <Content Include="Views\PromoteEmployees\Create.cshtml" />
+    <Content Include="Views\PromoteEmployees\Delete.cshtml" />
+    <Content Include="Views\PromoteEmployees\Details.cshtml" />
+    <Content Include="Views\PromoteEmployees\Edit.cshtml" />
+    <Content Include="Views\PromoteEmployees\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,10 +13,10 @@ namespace LoginPagePeoject
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class proteckhydbEntities : DbContext
+    public partial class proteckhydbEntities1 : DbContext
     {
-        public proteckhydbEntities()
-            : base("name=proteckhydbEntities")
+        public proteckhydbEntities1()
+            : base("name=proteckhydbEntities1")
         {
         }
     
@@ -25,8 +25,12 @@ namespace LoginPagePeoject
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<loginpage> loginpages { get; set; }
         public virtual DbSet<DesignTb> DesignTbs { get; set; }
+        public virtual DbSet<EmployeeDetail> EmployeeDetails { get; set; }
+        public virtual DbSet<loginpage> loginpages { get; set; }
         public virtual DbSet<registration> registrations { get; set; }
+        public virtual DbSet<Department1> Department1 { get; set; }
+        public virtual DbSet<EmployeeType> EmployeeTypes { get; set; }
+        public virtual DbSet<PromoteEmployee> PromoteEmployees { get; set; }
     }
 }

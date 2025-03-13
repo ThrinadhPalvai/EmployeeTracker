@@ -6,124 +6,111 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using LoginPagePeoject;
 
 namespace LoginPagePeoject.Controllers
 {
-    public class registrationsController : Controller
+    public class EmployeeTypesController : Controller
     {
         private proteckhydbEntities1 db = new proteckhydbEntities1();
 
-        // GET: registrations
+        // GET: EmployeeTypes
         public ActionResult Index()
         {
-            var registrations = db.registrations.Include(r => r.DesignTb);
-            return View(registrations.ToList());
+            return View(db.EmployeeTypes.ToList());
         }
 
-        // GET: registrations/Details/5
+        // GET: EmployeeTypes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            registration registration = db.registrations.Find(id);
-            if (registration == null)
+            EmployeeType employeeType = db.EmployeeTypes.Find(id);
+            if (employeeType == null)
             {
                 return HttpNotFound();
             }
-            return View(registration);
+            return View(employeeType);
         }
 
-        // GET: registrations/Create
+        // GET: EmployeeTypes/Create
         public ActionResult Create()
         {
-            ViewBag.Designation = new SelectList(db.DesignTbs, "Id", "Designation");
             return View();
         }
 
-        // POST: registrations/Create
+        // POST: EmployeeTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(registration reg, loginpage logPage)
+        public ActionResult Create([Bind(Include = "Id,EmployeeType1")] EmployeeType employeeType)
         {
+            if (ModelState.IsValid)
             {
-                db.registrations.Add(reg);
-                db.loginpages.Add(logPage);
-                logPage.Id = reg.Id;
-                logPage.Username = reg.Username;
-                logPage.Password = reg.Password;
-                logPage.Designation = reg.Designation.ToString();
-
+                db.EmployeeTypes.Add(employeeType);
                 db.SaveChanges();
-                ViewBag.Designation = new SelectList(db.DesignTbs, "Id", "Designation", reg.Designation);
                 return RedirectToAction("Index");
             }
 
-
-            //ViewBag.Designation = new SelectList(db.DesignTbs, "Id", "Designation", reg.Designation);
-            //return View(reg);
+            return View(employeeType);
         }
 
-        // GET: registrations/Edit/5
+        // GET: EmployeeTypes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            registration registration = db.registrations.Find(id);
-            if (registration == null)
+            EmployeeType employeeType = db.EmployeeTypes.Find(id);
+            if (employeeType == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Designation = new SelectList(db.DesignTbs, "Id", "Designation", registration.Designation);
-            return View(registration);
+            return View(employeeType);
         }
 
-        // POST: registrations/Edit/5
+        // POST: EmployeeTypes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(registration registration)
+        public ActionResult Edit([Bind(Include = "Id,EmployeeType1")] EmployeeType employeeType)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(registration).State = EntityState.Modified;
+                db.Entry(employeeType).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Designation = new SelectList(db.DesignTbs, "Id", "Designation", registration.Designation);
-            return View(registration);
+            return View(employeeType);
         }
 
-        // GET: registrations/Delete/5
+        // GET: EmployeeTypes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            registration registration = db.registrations.Find(id);
-            if (registration == null)
+            EmployeeType employeeType = db.EmployeeTypes.Find(id);
+            if (employeeType == null)
             {
                 return HttpNotFound();
             }
-            return View(registration);
+            return View(employeeType);
         }
 
-        // POST: registrations/Delete/5
+        // POST: EmployeeTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            registration registration = db.registrations.Find(id);
-            db.registrations.Remove(registration);
+            EmployeeType employeeType = db.EmployeeTypes.Find(id);
+            db.EmployeeTypes.Remove(employeeType);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

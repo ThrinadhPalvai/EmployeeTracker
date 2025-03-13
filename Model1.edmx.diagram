@@ -4,12 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8da2ec2a3e5240a9aa0a127a36d1af4a" Name="Diagram1">
-        <EntityTypeShape EntityType="proteckhydbModel.loginpage" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="proteckhydbModel.DesignTb" Width="1.5" PointX="3.25" PointY="1.25" />
-        <EntityTypeShape EntityType="proteckhydbModel.registration" Width="1.5" PointX="5.5" PointY="0.5" />
-        <AssociationConnector Association="proteckhydbModel.FK__registrat__Desig__6442E2C9" />
-        </Diagram>
+      <Diagram DiagramId="5c951c755dc14b2e83c826f8bdea1356" Name="Diagram1">
+        <EntityTypeShape EntityType="proteckhydbModel.DesignTb" Width="1.5" PointX="6.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="proteckhydbModel.EmployeeDetail" Width="1.5" PointX="9.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="proteckhydbModel.loginpage" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="proteckhydbModel.registration" Width="1.5" PointX="4" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="proteckhydbModel.FK__EmployeeD__Desig__0F2D40CE" ManuallyRouted="false" />
+        <AssociationConnector Association="proteckhydbModel.FK__registrat__Desig__6442E2C9" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="proteckhydbModel.Department1" Width="1.5" PointX="12.25" PointY="1.375" />
+        <AssociationConnector Association="proteckhydbModel.FK__EmployeeD__Depar__19AACF41" />
+        <EntityTypeShape EntityType="proteckhydbModel.EmployeeType" Width="1.5" PointX="9.375" PointY="7" />
+        <AssociationConnector Association="proteckhydbModel.FK__EmployeeD__Emplo__0A688BB1" />
+        <EntityTypeShape EntityType="proteckhydbModel.PromoteEmployee" Width="1.5" PointX="6.625" PointY="4.75" />
+        <AssociationConnector Association="proteckhydbModel.FK__PromoteEm__Desig__2EA5EC27" />
+        <AssociationConnector Association="proteckhydbModel.FK__PromoteEm__Selec__40C49C62" />
+        <AssociationConnector Association="proteckhydbModel.FK__PromoteEm__NewDe__42ACE4D4" />
+        <AssociationConnector Association="proteckhydbModel.FK__PromoteEm__Assig__41B8C09B" />
+        <AssociationConnector Association="proteckhydbModel.FK__PromoteEm__NewSu__43A1090D" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -12,12 +12,18 @@ namespace LoginPagePeoject
     using System;
     using System.Collections.Generic;
     
-    public partial class loginpage
+    public partial class EmployeeType
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EmployeeType()
+        {
+            this.EmployeeDetails = new HashSet<EmployeeDetail>();
+        }
+    
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Designation { get; set; }
-        public Nullable<bool> ActiveStatus { get; set; }
+        public string EmployeeType1 { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeDetail> EmployeeDetails { get; set; }
     }
 }

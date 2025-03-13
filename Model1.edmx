@@ -5,12 +5,51 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="proteckhydbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Department1">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="DeptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="DesignTb">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Designation" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="EmployeeDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Firstname" Type="varchar" MaxLength="30" />
+          <Property Name="Lastname" Type="varchar" MaxLength="30" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="bigint" />
+          <Property Name="Gender" Type="varchar" MaxLength="20" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="ReportingManager" Type="varchar" MaxLength="30" />
+          <Property Name="JoiningDate" Type="date" />
+          <Property Name="WorkLocation" Type="varchar" MaxLength="30" />
+          <Property Name="Salary" Type="int" />
+          <Property Name="ActiveStatus" Type="bit" />
+          <Property Name="Street" Type="nvarchar" MaxLength="30" />
+          <Property Name="City" Type="nvarchar" MaxLength="30" />
+          <Property Name="State" Type="nvarchar" MaxLength="30" />
+          <Property Name="Pincode" Type="int" />
+          <Property Name="Country" Type="nvarchar" MaxLength="30" />
+          <Property Name="EmployeeType" Type="int" />
+          <Property Name="Designation" Type="int" />
+          <Property Name="Department" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployeeType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeType" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="loginpage">
           <Key>
@@ -19,6 +58,20 @@
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Username" Type="nvarchar" MaxLength="20" />
           <Property Name="Password" Type="nvarchar" MaxLength="20" />
+          <Property Name="Designation" Type="varchar" MaxLength="50" />
+          <Property Name="ActiveStatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="PromoteEmployee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Designation" Type="int" />
+          <Property Name="SelectEmployee" Type="int" />
+          <Property Name="Salary" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="AssignTo" Type="int" />
+          <Property Name="NewDesignation" Type="int" />
+          <Property Name="NewSupervisor" Type="int" />
         </EntityType>
         <EntityType Name="registration">
           <Key>
@@ -35,6 +88,108 @@
           <Property Name="Address" Type="nvarchar" MaxLength="100" />
           <Property Name="Designation" Type="int" />
         </EntityType>
+        <Association Name="FK__EmployeeD__Depar__19AACF41">
+          <End Role="Department1" Type="Self.Department1" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department1">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="EmployeeDetails">
+              <PropertyRef Name="Department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeD__Desig__0F2D40CE">
+          <End Role="DesignTb" Type="Self.DesignTb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DesignTb">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeDetails">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeD__Emplo__0A688BB1">
+          <End Role="EmployeeType" Type="Self.EmployeeType" Multiplicity="0..1" />
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeDetails">
+              <PropertyRef Name="EmployeeType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Assig__41B8C09B">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="AssignTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Desig__2EA5EC27">
+          <End Role="DesignTb" Type="Self.DesignTb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DesignTb">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__NewDe__42ACE4D4">
+          <End Role="DesignTb" Type="Self.DesignTb" Multiplicity="0..1" />
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DesignTb">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="NewDesignation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__NewSu__43A1090D">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="NewSupervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Selec__40C49C62">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="SelectEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__registrat__Desig__6442E2C9">
           <End Role="DesignTb" Type="Self.DesignTb" Multiplicity="0..1" />
           <End Role="registration" Type="Self.registration" Multiplicity="*" />
@@ -48,9 +203,45 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="proteckhydbModelStoreContainer">
+          <EntitySet Name="Department1" EntityType="Self.Department1" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DesignTb" EntityType="Self.DesignTb" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeType" EntityType="Self.EmployeeType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="loginpage" EntityType="Self.loginpage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PromoteEmployee" EntityType="Self.PromoteEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="registration" EntityType="Self.registration" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__EmployeeD__Depar__19AACF41" Association="Self.FK__EmployeeD__Depar__19AACF41">
+            <End Role="Department1" EntitySet="Department1" />
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeD__Desig__0F2D40CE" Association="Self.FK__EmployeeD__Desig__0F2D40CE">
+            <End Role="DesignTb" EntitySet="DesignTb" />
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeD__Emplo__0A688BB1" Association="Self.FK__EmployeeD__Emplo__0A688BB1">
+            <End Role="EmployeeType" EntitySet="EmployeeType" />
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Assig__41B8C09B" Association="Self.FK__PromoteEm__Assig__41B8C09B">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Desig__2EA5EC27" Association="Self.FK__PromoteEm__Desig__2EA5EC27">
+            <End Role="DesignTb" EntitySet="DesignTb" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__NewDe__42ACE4D4" Association="Self.FK__PromoteEm__NewDe__42ACE4D4">
+            <End Role="DesignTb" EntitySet="DesignTb" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__NewSu__43A1090D" Association="Self.FK__PromoteEm__NewSu__43A1090D">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Selec__40C49C62" Association="Self.FK__PromoteEm__Selec__40C49C62">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
           <AssociationSet Name="FK__registrat__Desig__6442E2C9" Association="Self.FK__registrat__Desig__6442E2C9">
             <End Role="DesignTb" EntitySet="DesignTb" />
             <End Role="registration" EntitySet="registration" />
@@ -60,6 +251,48 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="proteckhydbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DesignTb">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Designation" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="Self.FK__EmployeeD__Desig__0F2D40CE" FromRole="DesignTb" ToRole="EmployeeDetails" />
+          <NavigationProperty Name="registrations" Relationship="Self.FK__registrat__Desig__6442E2C9" FromRole="DesignTb" ToRole="registration" />
+          <NavigationProperty Name="PromoteEmployees" Relationship="proteckhydbModel.FK__PromoteEm__Desig__2EA5EC27" FromRole="DesignTb" ToRole="PromoteEmployee" />
+          <NavigationProperty Name="PromoteEmployees1" Relationship="proteckhydbModel.FK__PromoteEm__NewDe__42ACE4D4" FromRole="DesignTb" ToRole="PromoteEmployee" />
+        </EntityType>
+        <EntityType Name="EmployeeDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="Int64" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="ReportingManager" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="JoiningDate" Type="DateTime" Precision="0" />
+          <Property Name="WorkLocation" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Salary" Type="Int32" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="Street" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Pincode" Type="Int32" />
+          <Property Name="Country" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeType" Type="Int32" />
+          <Property Name="Designation" Type="Int32" />
+          <NavigationProperty Name="DesignTb" Relationship="Self.FK__EmployeeD__Desig__0F2D40CE" FromRole="EmployeeDetails" ToRole="DesignTb" />
+          <Property Name="Department" Type="Int32" />
+          <NavigationProperty Name="Department1" Relationship="proteckhydbModel.FK__EmployeeD__Depar__19AACF41" FromRole="EmployeeDetail" ToRole="Department1" />
+          <NavigationProperty Name="EmployeeType1" Relationship="proteckhydbModel.FK__EmployeeD__Emplo__0A688BB1" FromRole="EmployeeDetail" ToRole="EmployeeType" />
+          <NavigationProperty Name="PromoteEmployees" Relationship="proteckhydbModel.FK__PromoteEm__Selec__40C49C62" FromRole="EmployeeDetail" ToRole="PromoteEmployee" />
+          <NavigationProperty Name="PromoteEmployees1" Relationship="proteckhydbModel.FK__PromoteEm__Assig__41B8C09B" FromRole="EmployeeDetail" ToRole="PromoteEmployee" />
+          <NavigationProperty Name="PromoteEmployees11" Relationship="proteckhydbModel.FK__PromoteEm__NewSu__43A1090D" FromRole="EmployeeDetail" ToRole="PromoteEmployee" />
+        </EntityType>
         <EntityType Name="loginpage">
           <Key>
             <PropertyRef Name="Id" />
@@ -67,23 +300,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityContainer Name="proteckhydbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="loginpages" EntityType="Self.loginpage" />
-          <EntitySet Name="DesignTbs" EntityType="proteckhydbModel.DesignTb" />
-          <EntitySet Name="registrations" EntityType="proteckhydbModel.registration" />
-          <AssociationSet Name="FK__registrat__Desig__6442E2C9" Association="proteckhydbModel.FK__registrat__Desig__6442E2C9">
-            <End Role="DesignTb" EntitySet="DesignTbs" />
-            <End Role="registration" EntitySet="registrations" />
-          </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="DesignTb">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Designation" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="registrations" Relationship="proteckhydbModel.FK__registrat__Desig__6442E2C9" FromRole="DesignTb" ToRole="registration" />
+          <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ActiveStatus" Type="Boolean" />
         </EntityType>
         <EntityType Name="registration">
           <Key>
@@ -99,11 +317,25 @@
           <Property Name="PhoneNumber" Type="Int64" />
           <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Designation" Type="Int32" />
-          <NavigationProperty Name="DesignTb" Relationship="proteckhydbModel.FK__registrat__Desig__6442E2C9" FromRole="registration" ToRole="DesignTb" />
+          <NavigationProperty Name="DesignTb" Relationship="Self.FK__registrat__Desig__6442E2C9" FromRole="registration" ToRole="DesignTb" />
         </EntityType>
+        <Association Name="FK__EmployeeD__Desig__0F2D40CE">
+          <End Role="DesignTb" Type="Self.DesignTb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DesignTb">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeDetails">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__registrat__Desig__6442E2C9">
-          <End Type="proteckhydbModel.DesignTb" Role="DesignTb" Multiplicity="0..1" />
-          <End Type="proteckhydbModel.registration" Role="registration" Multiplicity="*" />
+          <End Role="DesignTb" Type="Self.DesignTb" Multiplicity="0..1" />
+          <End Role="registration" Type="Self.registration" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DesignTb">
               <PropertyRef Name="Id" />
@@ -113,42 +345,265 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <EntityContainer Name="proteckhydbEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DesignTbs" EntityType="Self.DesignTb" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetail" />
+          <EntitySet Name="loginpages" EntityType="Self.loginpage" />
+          <EntitySet Name="registrations" EntityType="Self.registration" />
+          <AssociationSet Name="FK__EmployeeD__Desig__0F2D40CE" Association="Self.FK__EmployeeD__Desig__0F2D40CE">
+            <End Role="DesignTb" EntitySet="DesignTbs" />
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__registrat__Desig__6442E2C9" Association="Self.FK__registrat__Desig__6442E2C9">
+            <End Role="DesignTb" EntitySet="DesignTbs" />
+            <End Role="registration" EntitySet="registrations" />
+          </AssociationSet>
+          <EntitySet Name="Department1" EntityType="proteckhydbModel.Department1" />
+          <AssociationSet Name="FK__EmployeeD__Depar__19AACF41" Association="proteckhydbModel.FK__EmployeeD__Depar__19AACF41">
+            <End Role="Department1" EntitySet="Department1" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <EntitySet Name="EmployeeTypes" EntityType="proteckhydbModel.EmployeeType" />
+          <AssociationSet Name="FK__EmployeeD__Emplo__0A688BB1" Association="proteckhydbModel.FK__EmployeeD__Emplo__0A688BB1">
+            <End Role="EmployeeType" EntitySet="EmployeeTypes" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <EntitySet Name="PromoteEmployees" EntityType="proteckhydbModel.PromoteEmployee" />
+          <AssociationSet Name="FK__PromoteEm__Desig__2EA5EC27" Association="proteckhydbModel.FK__PromoteEm__Desig__2EA5EC27">
+            <End Role="DesignTb" EntitySet="DesignTbs" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Selec__40C49C62" Association="proteckhydbModel.FK__PromoteEm__Selec__40C49C62">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__NewDe__42ACE4D4" Association="proteckhydbModel.FK__PromoteEm__NewDe__42ACE4D4">
+            <End Role="DesignTb" EntitySet="DesignTbs" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Assig__41B8C09B" Association="proteckhydbModel.FK__PromoteEm__Assig__41B8C09B">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__NewSu__43A1090D" Association="proteckhydbModel.FK__PromoteEm__NewSu__43A1090D">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Department1">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="DeptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Department" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="proteckhydbModel.FK__EmployeeD__Depar__19AACF41" FromRole="Department1" ToRole="EmployeeDetail" />
+        </EntityType>
+        <Association Name="FK__EmployeeD__Depar__19AACF41">
+          <End Type="proteckhydbModel.Department1" Role="Department1" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="proteckhydbModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department1">
+              <PropertyRef Name="DeptId" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="Department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EmployeeType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeType1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="proteckhydbModel.FK__EmployeeD__Emplo__0A688BB1" FromRole="EmployeeType" ToRole="EmployeeDetail" />
+        </EntityType>
+        <Association Name="FK__EmployeeD__Emplo__0A688BB1">
+          <End Type="proteckhydbModel.EmployeeType" Role="EmployeeType" Multiplicity="0..1" />
+          <End Type="proteckhydbModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="EmployeeType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PromoteEmployee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Designation" Type="Int32" />
+          <NavigationProperty Name="DesignTb" Relationship="proteckhydbModel.FK__PromoteEm__Desig__2EA5EC27" FromRole="PromoteEmployee" ToRole="DesignTb" />
+          <Property Name="SelectEmployee" Type="Int32" />
+          <NavigationProperty Name="EmployeeDetail" Relationship="proteckhydbModel.FK__PromoteEm__Selec__40C49C62" FromRole="PromoteEmployee" ToRole="EmployeeDetail" />
+          <Property Name="Salary" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="AssignTo" Type="Int32" />
+          <Property Name="NewDesignation" Type="Int32" />
+          <Property Name="NewSupervisor" Type="Int32" />
+          <NavigationProperty Name="DesignTb1" Relationship="proteckhydbModel.FK__PromoteEm__NewDe__42ACE4D4" FromRole="PromoteEmployee" ToRole="DesignTb" />
+          <NavigationProperty Name="EmployeeDetail1" Relationship="proteckhydbModel.FK__PromoteEm__Assig__41B8C09B" FromRole="PromoteEmployee" ToRole="EmployeeDetail" />
+          <NavigationProperty Name="EmployeeDetail11" Relationship="proteckhydbModel.FK__PromoteEm__NewSu__43A1090D" FromRole="PromoteEmployee" ToRole="EmployeeDetail" />
+        </EntityType>
+        <Association Name="FK__PromoteEm__Desig__2EA5EC27">
+          <End Type="proteckhydbModel.DesignTb" Role="DesignTb" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="proteckhydbModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DesignTb">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Selec__40C49C62">
+          <End Type="proteckhydbModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="0..1" />
+          <End Type="proteckhydbModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="SelectEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__NewDe__42ACE4D4">
+          <End Type="proteckhydbModel.DesignTb" Role="DesignTb" Multiplicity="0..1" />
+          <End Type="proteckhydbModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DesignTb">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="NewDesignation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Assig__41B8C09B">
+          <End Type="proteckhydbModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="0..1" />
+          <End Type="proteckhydbModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="AssignTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__NewSu__43A1090D">
+          <End Type="proteckhydbModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="0..1" />
+          <End Type="proteckhydbModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="NewSupervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="proteckhydbModelStoreContainer" CdmEntityContainer="proteckhydbEntities">
-          <EntitySetMapping Name="loginpages">
-            <EntityTypeMapping TypeName="proteckhydbModel.loginpage">
-              <MappingFragment StoreEntitySet="loginpage">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+        <EntityContainerMapping StorageEntityContainer="proteckhydbModelStoreContainer" CdmEntityContainer="proteckhydbEntities1">
           <EntitySetMapping Name="DesignTbs">
             <EntityTypeMapping TypeName="proteckhydbModel.DesignTb">
               <MappingFragment StoreEntitySet="DesignTb">
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDetails">
+            <EntityTypeMapping TypeName="proteckhydbModel.EmployeeDetail">
+              <MappingFragment StoreEntitySet="EmployeeDetails">
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="ReportingManager" ColumnName="ReportingManager" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="loginpages">
+            <EntityTypeMapping TypeName="proteckhydbModel.loginpage">
+              <MappingFragment StoreEntitySet="loginpage">
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="registrations">
             <EntityTypeMapping TypeName="proteckhydbModel.registration">
               <MappingFragment StoreEntitySet="registration">
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DateofBirth" ColumnName="DateofBirth" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department1">
+            <EntityTypeMapping TypeName="proteckhydbModel.Department1">
+              <MappingFragment StoreEntitySet="Department1">
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeTypes">
+            <EntityTypeMapping TypeName="proteckhydbModel.EmployeeType">
+              <MappingFragment StoreEntitySet="EmployeeType">
+                <ScalarProperty Name="EmployeeType1" ColumnName="EmployeeType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PromoteEmployees">
+            <EntityTypeMapping TypeName="proteckhydbModel.PromoteEmployee">
+              <MappingFragment StoreEntitySet="PromoteEmployee">
+                <ScalarProperty Name="NewSupervisor" ColumnName="NewSupervisor" />
+                <ScalarProperty Name="NewDesignation" ColumnName="NewDesignation" />
+                <ScalarProperty Name="AssignTo" ColumnName="AssignTo" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="SelectEmployee" ColumnName="SelectEmployee" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

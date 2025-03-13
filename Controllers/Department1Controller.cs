@@ -6,124 +6,111 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using LoginPagePeoject;
 
 namespace LoginPagePeoject.Controllers
 {
-    public class registrationsController : Controller
+    public class Department1Controller : Controller
     {
         private proteckhydbEntities1 db = new proteckhydbEntities1();
 
-        // GET: registrations
+        // GET: Department1
         public ActionResult Index()
         {
-            var registrations = db.registrations.Include(r => r.DesignTb);
-            return View(registrations.ToList());
+            return View(db.Department1.ToList());
         }
 
-        // GET: registrations/Details/5
+        // GET: Department1/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            registration registration = db.registrations.Find(id);
-            if (registration == null)
+            Department1 department1 = db.Department1.Find(id);
+            if (department1 == null)
             {
                 return HttpNotFound();
             }
-            return View(registration);
+            return View(department1);
         }
 
-        // GET: registrations/Create
+        // GET: Department1/Create
         public ActionResult Create()
         {
-            ViewBag.Designation = new SelectList(db.DesignTbs, "Id", "Designation");
             return View();
         }
 
-        // POST: registrations/Create
+        // POST: Department1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(registration reg, loginpage logPage)
+        public ActionResult Create(Department1 department1)
         {
+            if (ModelState.IsValid)
             {
-                db.registrations.Add(reg);
-                db.loginpages.Add(logPage);
-                logPage.Id = reg.Id;
-                logPage.Username = reg.Username;
-                logPage.Password = reg.Password;
-                logPage.Designation = reg.Designation.ToString();
-
+                db.Department1.Add(department1);
                 db.SaveChanges();
-                ViewBag.Designation = new SelectList(db.DesignTbs, "Id", "Designation", reg.Designation);
                 return RedirectToAction("Index");
             }
 
-
-            //ViewBag.Designation = new SelectList(db.DesignTbs, "Id", "Designation", reg.Designation);
-            //return View(reg);
+            return View(department1);
         }
 
-        // GET: registrations/Edit/5
+        // GET: Department1/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            registration registration = db.registrations.Find(id);
-            if (registration == null)
+            Department1 department1 = db.Department1.Find(id);
+            if (department1 == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Designation = new SelectList(db.DesignTbs, "Id", "Designation", registration.Designation);
-            return View(registration);
+            return View(department1);
         }
 
-        // POST: registrations/Edit/5
+        // POST: Department1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(registration registration)
+        public ActionResult Edit(Department1 department1)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(registration).State = EntityState.Modified;
+                db.Entry(department1).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Designation = new SelectList(db.DesignTbs, "Id", "Designation", registration.Designation);
-            return View(registration);
+            return View(department1);
         }
 
-        // GET: registrations/Delete/5
+        // GET: Department1/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            registration registration = db.registrations.Find(id);
-            if (registration == null)
+            Department1 department1 = db.Department1.Find(id);
+            if (department1 == null)
             {
                 return HttpNotFound();
             }
-            return View(registration);
+            return View(department1);
         }
 
-        // POST: registrations/Delete/5
+        // POST: Department1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            registration registration = db.registrations.Find(id);
-            db.registrations.Remove(registration);
+            Department1 department1 = db.Department1.Find(id);
+            db.Department1.Remove(department1);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
